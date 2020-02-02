@@ -22,11 +22,31 @@ export default {
     },
     methods:{
         getArticles(){
-            axios.get('https://jsonplaceholder.typicode.com/todos/1')
+          /*  axios.get('https://jsonplaceholder.typicode.com/todos/1')
             .then((res) => {
                 console.log("result::::::::::::::::::::", res.data.title);
                 this.name =  res.data.title
             })
+        */
+
+
+        axios({
+            "method":"GET",
+            "url":"https://microsoft-azure-bing-news-search-v1.p.rapidapi.com/",
+            "headers":
+            {
+                "content-type":"application/octet-stream",
+                "x-rapidapi-host":"microsoft-azure-bing-news-search-v1.p.rapidapi.com",
+                "x-rapidapi-key":"QIiovCTHWrmshe86Hfn2WFwYBPrZp1MqwVTjsnBYXNuAy0zGFS"
+            }
+        })
+        .then((response)=>{
+            console.log("result---------------", response);
+            this.name = JSON.stringify(response)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
         }
     }
 }
