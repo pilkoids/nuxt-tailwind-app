@@ -3,7 +3,7 @@
     <div>
       <logo />
       <h4 class="title">
-        nuxt-app
+        Grenville's News analysis API
       </h4>
       <articleSearch />
     </div>
@@ -47,7 +47,8 @@ export default {
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
-  font-size:4em;
+  font-size:2em;
+  margin-bottom:30px;
 }
 
 .subtitle {
