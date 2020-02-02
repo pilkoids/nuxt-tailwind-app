@@ -1,6 +1,6 @@
 # nuxt-app
 
-> My tremendous Nuxt.js project
+> A Nuxt.js project
 > Connecting a news search api (https://rapidapi.com/microsoft-azure/api/bing-news-search) with a NLP api (https://developer.aylien.com/text-api-demo) to discern the sentiment of news articles
 
 ## Build Setup
