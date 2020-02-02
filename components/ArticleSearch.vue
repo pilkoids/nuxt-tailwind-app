@@ -52,8 +52,12 @@ export default {
             }
             })
             .then((response)=>{
-                console.log("result---------------", response);
-                this.name = response.data.value
+                this.name = response.data.value;
+                for(var article in this.name){
+                    console.log("article url:",this.name[article].url);
+                    this.name[article].test123 = "asdfasdfads"
+                }
+                                console.log("result---------------", response);
             })
             .catch((error)=>{
                 console.log(error)
