@@ -14,6 +14,7 @@
             <li v-for="n in name" v-bind:key="n" style="margin-bottom:10px;padding:10px;background:lightgrey">
                 <p>{{n.url}}</p>
                 <p>{{n.description}}</p>
+                <p>Polarity: {{n.polarity}}</p>
             </li>
         </ul>
     </div>
@@ -48,16 +49,41 @@ export default {
             "x-rapidapi-host":"microsoft-azure-bing-news-search-v1.p.rapidapi.com",
             "x-rapidapi-key":"QIiovCTHWrmshe86Hfn2WFwYBPrZp1MqwVTjsnBYXNuAy0zGFS"
             },"params":{
-            "q":this.qry
+                "count":"1",
+                "q":this.qry
             }
             })
             .then((response)=>{
                 this.name = response.data.value;
                 for(var article in this.name){
                     console.log("article url:",this.name[article].url);
-                    this.name[article].test123 = "asdfasdfads"
+
+                    axios({
+                        "method":"GET",
+                        "url":"https://aylien-text.p.rapidapi.com/sentiment",
+                        "headers":{
+                        "content-type":"application/octet-stream",
+                        "x-rapidapi-host":"aylien-text.p.rapidapi.com",
+                        "x-rapidapi-key":"QIiovCTHWrmshe86Hfn2WFwYBPrZp1MqwVTjsnBYXNuAy0zGFS"
+                        },"params":{
+                        "url":this.name[article].url,
+                        "mode":"tweet"
+                        }
+                        })
+                        .then((response)=>{
+                            console.log("Aylien response:", response.data.polarity);
+                            this.name[article].polarity = response.data.polarity;
+
+                            console.log("result---------------", response);
+                            console.log("polarity:::", this.name[article].polarity)
+                            console.log("this.name", this.name)
+                        })
+                        .catch((error)=>{
+                            console.log(error)
+                        })
+
+                    this.name[article].test123 = "asdfasdfads";
                 }
-                                console.log("result---------------", response);
             })
             .catch((error)=>{
                 console.log(error)
