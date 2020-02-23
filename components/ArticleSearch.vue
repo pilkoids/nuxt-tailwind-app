@@ -44,7 +44,7 @@ export default {
             console.log("Value:", this.qry)
             this.getArticles();
         },
-        getArticles(){
+        async getArticles(){
             axios({
                 "method":"GET",
                 "url":"https://microsoft-azure-bing-news-search-v1.p.rapidapi.com/search",
@@ -53,19 +53,21 @@ export default {
                 "x-rapidapi-host":"microsoft-azure-bing-news-search-v1.p.rapidapi.com",
                 "x-rapidapi-key":"QIiovCTHWrmshe86Hfn2WFwYBPrZp1MqwVTjsnBYXNuAy0zGFS"
                 },"params":{
-                    "count":"3",
+                    "count":"4",
                     "q":this.qry
                 }
                 })
-                .then((response)=>{
+                .then(async(response)=>{
                     //this.name = response.data.value;
                     var articles = response.data.value;
                     var counter = 1;
-                    for(var article in articles){
+
+
+                    for(var article=0; article<articles.length; article++){
                         console.log("article url:",articles[article].url);
                         //articles[article].polarity = "initial";
 
-                        axios({
+                        var response = await axios({
                             "method":"GET",
                             "url":"https://aylien-text.p.rapidapi.com/sentiment",
                             "headers":{
@@ -77,25 +79,25 @@ export default {
                             "mode":"tweet"
                             }
                         })
-                        .then((response)=>{
+
                             console.log("Aylien response:", response.data.polarity);
+                            console.log("article:::", article);
                             articles[article].polarity = response.data.polarity;
                         // this.polarity = response.data.polarity;
-                            console.log("result---------------", response);
-                            console.log("polarity:::", articles[article].polarity)
-                            console.log("this.name", articles);
                             articles[article].test123 = "asdfasdfads";
                             articles[article].artSize = articles.length;
                             articles[article].counter = counter;
-                            if(counter == articles.length){
+                                                        console.log("result---------------", response);
+                            console.log("polarity:::", articles[article].polarity)
+                            console.log("articles--", articles);
+
+                            if(article+1 == articles.length){
                                 this.name = articles;
+                                console.log("Articles:", articles)
+                                console.log("Final this.name:", this.name)
                             }
 
-                            counter++;
-                        })
-                        .catch((error)=>{
-                            console.log(error)
-                        })
+                           
                     }
 
                 })
